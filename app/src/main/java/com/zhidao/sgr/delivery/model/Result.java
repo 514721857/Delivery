@@ -11,10 +11,10 @@ public class Result<T> {
 
 
 
-    public String msg;
-
-
     public String message;
+
+
+    public String status;
 
 
     public T content;

@@ -13,10 +13,28 @@ public class OrderBean {
     String total;
      int status;
     String detail;
-    String express_fee;
+    String expressFee;
     String amount;
     String quantity;
     String sn;
+    String phone;
+    String gmtCreate;
+
+    public String getGmtCreate() {
+        return gmtCreate;
+    }
+
+    public void setGmtCreate(String gmtCreate) {
+        this.gmtCreate = gmtCreate;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
 
     public String getUsername() {
         return username;
@@ -66,12 +84,12 @@ public class OrderBean {
         this.detail = detail;
     }
 
-    public String getExpress_fee() {
-        return express_fee;
+    public String getExpressFee() {
+        return expressFee;
     }
 
-    public void setExpress_fee(String express_fee) {
-        this.express_fee = express_fee;
+    public void setExpressFee(String expressFee) {
+        this.expressFee = expressFee;
     }
 
     public String getAmount() {

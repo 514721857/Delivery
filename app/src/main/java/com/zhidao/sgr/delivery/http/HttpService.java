@@ -2,13 +2,16 @@ package com.zhidao.sgr.delivery.http;
 
 
 import com.zhidao.sgr.delivery.model.OrderBean;
+import com.zhidao.sgr.delivery.model.Result;
 
 import java.util.List;
 
 import io.reactivex.Observable;
+import okhttp3.RequestBody;
 import okhttp3.ResponseBody;
-import retrofit2.adapter.rxjava2.Result;
+import retrofit2.http.Body;
 import retrofit2.http.GET;
+import retrofit2.http.Header;
 import retrofit2.http.Headers;
 import retrofit2.http.POST;
 import retrofit2.http.Query;
@@ -23,6 +26,10 @@ import retrofit2.http.Query;
 public interface HttpService {
 
 
+
+
+
+
     /**
      * 登录接口
      *
@@ -30,18 +37,29 @@ public interface HttpService {
      * @return
      */
     @Headers({"Content-type:application/json;charset=UTF-8"})
-    @POST("seller/order/list")
-    Observable<ResponseBody> getSave();
+    @POST("seller/login")
+    Observable<Result<String>> getLogin(@Body RequestBody info);
 
 
     /**
-     * 登录接口
+     * 测试接口
      *
-     * @param status
+     *
      * @return
      */
+    @Headers({"Content-type:application/json;charset=UTF-8"})
     @POST("seller/order/list")
-    Observable<Result<List<OrderBean>>> getOrderList(@Query("status") String status);
+    Observable<ResponseBody> getSave(@Header("token") String token, @Body RequestBody info);
 
+
+    /**
+     * 获得订单接口
+     *@param info 请求体
+     * @param token 请求头
+     * @return
+     */
+    @Headers({"Content-type:application/json;charset=UTF-8"})
+    @POST("seller/order/list")
+    Observable<Result<List<OrderBean>>> getOrderList(@Header("token") String token, @Body RequestBody info);
 
 }

@@ -42,7 +42,7 @@ public class BaseModel implements MvpModel {
                 .baseUrl(getServerUrl())
 
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
-//                .addConverterFactory(GsonConverterFactory.create())
+                .addConverterFactory(GsonConverterFactory.create())
                 .build();
         return retrofit.create(service);
     }
