@@ -19,6 +19,15 @@ public class OrderBean {
     String sn;
     String phone;
     String gmtCreate;
+    String sendTime;
+
+    public String getSendTime() {
+        return sendTime;
+    }
+
+    public void setSendTime(String sendTime) {
+        this.sendTime = sendTime;
+    }
 
     public String getGmtCreate() {
         return gmtCreate;

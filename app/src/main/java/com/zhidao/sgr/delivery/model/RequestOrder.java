@@ -7,8 +7,25 @@ package com.zhidao.sgr.delivery.model;
  */
 public class RequestOrder {
     int status;
-    int page;
+    int currPage;
+    int pageSize;
     String address;
+
+    public int getCurrPage() {
+        return currPage;
+    }
+
+    public void setCurrPage(int currPage) {
+        this.currPage = currPage;
+    }
+
+    public int getPageSize() {
+        return pageSize;
+    }
+
+    public void setPageSize(int pageSize) {
+        this.pageSize = pageSize;
+    }
 
     public int getStatus() {
         return status;
@@ -16,14 +33,6 @@ public class RequestOrder {
 
     public void setStatus(int status) {
         this.status = status;
-    }
-
-    public int getPage() {
-        return page;
-    }
-
-    public void setPage(int page) {
-        this.page = page;
     }
 
     public String getAddress() {

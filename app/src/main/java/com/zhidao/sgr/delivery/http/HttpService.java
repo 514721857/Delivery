@@ -2,6 +2,7 @@ package com.zhidao.sgr.delivery.http;
 
 
 import com.zhidao.sgr.delivery.model.OrderBean;
+import com.zhidao.sgr.delivery.model.OrderRespons;
 import com.zhidao.sgr.delivery.model.Result;
 
 import java.util.List;
@@ -59,7 +60,18 @@ public interface HttpService {
      * @return
      */
     @Headers({"Content-type:application/json;charset=UTF-8"})
-    @POST("seller/order/list")
-    Observable<Result<List<OrderBean>>> getOrderList(@Header("token") String token, @Body RequestBody info);
+    @POST("seller/order/page")
+    Observable<Result<OrderRespons>> getOrderList(@Header("token") String token, @Body RequestBody info);
+
+
+    /**
+     * 修改订单接口
+     *@param info 请求体
+     * @param token 请求头
+     * @return
+     */
+    @Headers({"Content-type:application/json;charset=UTF-8"})
+    @POST("seller/order/update")
+    Observable<Result<OrderRespons>> UpdateOrder(@Header("token") String token, @Body RequestBody info);
 
 }

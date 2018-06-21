@@ -1,13 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ripple xmlns:android="http://schemas.android.com/apk/res/android"
-    android:color="@color/gray_color">
-    <item android:id="@android:id/mask"
-          android:drawable="@android:color/white" />
-    <item>
-        <shape android:shape="rectangle" >
-            <corners android:radius="@dimen/dp_4"/>
-            <solid android:color="@color/item_bg"/>
-            <stroke android:color="@color/gray_color" android:width="1px"/>
-        </shape>
-    </item>
-</ripple>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:drawable="@color/gray_color" android:state_pressed="true"/>
+    <item android:drawable="@color/gray_color" android:state_focused="true"/>
+    <item android:drawable="@color/item_bg"/>
+</selector>

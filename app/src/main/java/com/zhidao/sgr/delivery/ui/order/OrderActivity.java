@@ -1,7 +1,9 @@
 package com.zhidao.sgr.delivery.ui.order;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
+import android.net.Uri;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -14,6 +16,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
+import com.chad.library.adapter.base.BaseQuickAdapter.OnItemChildClickListener;
 import com.google.gson.Gson;
 import com.zhidao.sgr.delivery.R;
 import com.zhidao.sgr.delivery.config.AppCon;
@@ -37,7 +40,7 @@ import butterknife.Unbinder;
 import okhttp3.RequestBody;
 import okhttp3.ResponseBody;
 
-public class OrderActivity extends BaseMvpActivity<OrderView,OrderPresenter> implements OrderView {
+public class OrderActivity extends BaseMvpActivity<OrderView,OrderPresenter> implements OrderView ,OnItemChildClickListener{
     @BindView(R.id.rv_list)
     RecyclerView mRecyclerView;
 
@@ -50,6 +53,7 @@ public class OrderActivity extends BaseMvpActivity<OrderView,OrderPresenter> imp
     private static final int PAGE_SIZE = 10;
     SharedPreferences pref ;
     SharedPreferences.Editor editor;
+    String address;
     @Override
     protected int setLayoutId() {
         return R.layout.activity_main;
@@ -99,7 +103,7 @@ public class OrderActivity extends BaseMvpActivity<OrderView,OrderPresenter> imp
     @Override
     protected void initView() {
         super.initView();
-      mSwipeRefreshLayout.setRefreshing(false);
+        mSwipeRefreshLayout.setRefreshing(false);
         mSwipeRefreshLayout.setColorSchemeColors(Color.rgb(47, 223, 189));
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
@@ -117,18 +121,19 @@ public class OrderActivity extends BaseMvpActivity<OrderView,OrderPresenter> imp
         });
         mAdapter.openLoadAnimation(BaseQuickAdapter.SLIDEIN_LEFT);
         mRecyclerView.setAdapter(mAdapter);
+        mAdapter.setOnItemChildClickListener(this);
         refresh();
     }
 
 
     private void loadMore() {
-        getPresenter().getOrderList(1,mNextRequestPage);
+        getPresenter().getOrderList(1,mNextRequestPage,address);
     }
 
     private void refresh() {
         mNextRequestPage = 1;
         mAdapter.setEnableLoadMore(false);//这里的作用是防止下拉刷新的时候还可以上拉加载
-       getPresenter().getOrderList(1,mNextRequestPage);
+       getPresenter().getOrderList(1,mNextRequestPage,address);
     }
 
 
@@ -157,6 +162,12 @@ public class OrderActivity extends BaseMvpActivity<OrderView,OrderPresenter> imp
     }
 
     @Override
+    public void UpdateSussess(int position) {
+        mAdapter.remove(position);
+        mAdapter.notifyDataSetChanged();
+    }
+
+    @Override
     public void showResult(List<OrderBean> result) {
         if(mNextRequestPage==1){
             setData(true,result);
@@ -172,5 +183,36 @@ public class OrderActivity extends BaseMvpActivity<OrderView,OrderPresenter> imp
     @Override
     public void showResultOnErr(String err) {
                Toast.makeText(this,err,Toast.LENGTH_SHORT).show();
+    }
+
+
+    @Override
+    public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
+        switch (view.getId()) {
+
+            case R.id.order_btn_phone://打电话
+                OrderBean temp=  (OrderBean) adapter.getData().get(position);
+                Intent intent = new Intent(Intent.ACTION_CALL);
+                Uri data = Uri.parse("tel:" + temp.getPhone());
+                intent.setData(data);
+                OrderActivity.this.startActivity(intent);
+                break;
+            case R.id.order_list_zt:
+                OrderBean temp1=  (OrderBean) adapter.getData().get(position);
+                OrderBean orderBean=new OrderBean();
+                orderBean.setStatus(4);
+                orderBean.setPhone(temp1.getPhone());
+                orderBean.setUsername(temp1.getUsername());
+                orderBean.setSummary(temp1.getSummary());
+                orderBean.setAddress(temp1.getAddress());
+                orderBean.setExpressFee(temp1.getExpressFee());
+                orderBean.setAmount(temp1.getAmount());
+                orderBean.setTotal(temp1.getTotal());
+                orderBean.setDetail(temp1.getDetail());
+
+                getPresenter().UpdateOrder(orderBean,position);
+                break;
+
+        }
     }
 }

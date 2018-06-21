@@ -11,6 +11,7 @@ import java.util.List;
  * Description:V层接口
  */
 public interface OrderView extends MvpView {
+    void UpdateSussess(int position);
     void showResult(List<OrderBean> result);
     void showResultOnErr(String err);
 

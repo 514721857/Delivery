@@ -2,6 +2,7 @@ package com.zhidao.sgr.delivery.model;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.zhidao.sgr.delivery.config.AppCon;
@@ -61,18 +62,42 @@ public class CommonModel extends BaseModel {
     }
 
     /**
-     * 登录
+     * 订单列表
      *
      * @param onLceHttpResultListener
      */
-    public void getOrderList(int  status,int page, final HttpUtils.OnHttpResultListener onLceHttpResultListener) {
+    public void getOrderList(int  status,int page,String address, final HttpUtils.OnHttpResultListener onLceHttpResultListener) {
        RequestOrder order=new RequestOrder();
+        order.setPageSize(10);
+        order.setCurrPage(page);
         order.setStatus(status);
+        if(address!=null&&!order.equals("")){
+            order.setAddress(address);
+        }
+//        order.setStatus(status);
         Gson gson=new Gson();
         String obj=gson.toJson(order);
         RequestBody body= RequestBody.create(okhttp3.MediaType.parse("application/json; charset=utf-8"),obj);
         HttpService essenceService= buildService(HttpService.class);
         buildObserve((Observable)essenceService.getOrderList(token,body),onLceHttpResultListener);
+
+    }
+
+
+    /**
+     * 订单列表
+     *
+     * @param onLceHttpResultListener
+     */
+    public void UpdateOrder(OrderBean order, final HttpUtils.OnHttpResultListener onLceHttpResultListener) {
+    /*    RequestOrder order=new RequestOrder();
+        order.setStatus(status);*/
+        Gson gson=new Gson();
+        String obj=gson.toJson(order);
+        System.out.println("请求参数"+obj);
+        RequestBody body= RequestBody.create(okhttp3.MediaType.parse("application/json; charset=utf-8"),obj);
+        HttpService essenceService= buildService(HttpService.class);
+        buildObserve((Observable)essenceService.UpdateOrder(token,body),onLceHttpResultListener);
 
     }
 

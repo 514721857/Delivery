@@ -10,6 +10,7 @@ import com.zhidao.sgr.delivery.config.BasePresenter;
 import com.zhidao.sgr.delivery.http.HttpUtils;
 import com.zhidao.sgr.delivery.model.CommonModel;
 import com.zhidao.sgr.delivery.model.OrderBean;
+import com.zhidao.sgr.delivery.model.OrderRespons;
 import com.zhidao.sgr.delivery.model.Result;
 import com.zhidao.sgr.delivery.ui.LoginActivity;
 import com.zhidao.sgr.delivery.util.StartActivityUtil;
@@ -31,13 +32,13 @@ public class OrderPresenter extends BasePresenter<OrderView> {
         this.contexts=context;
         this.commonModel = new CommonModel(context);
     }
-    public void getOrderList(int status,int page){
-        commonModel.getOrderList(status, page, new HttpUtils.OnHttpResultListener() {
+    public void getOrderList(int status,int page,String address){
+        commonModel.getOrderList(status, page,address, new HttpUtils.OnHttpResultListener() {
             @Override
             public void onResult(Object result) {
-                Result<List<OrderBean>> temp=(Result<List<OrderBean>>)result;
+               Result<OrderRespons> temp=(Result<OrderRespons>)result;
                 if(temp.status.equals("200")){
-                   getView().showResult(temp.content);
+                   getView().showResult(temp.content.getData());
                 }else{
                     getView().showResultOnErr(temp.message);
 
@@ -56,6 +57,30 @@ public class OrderPresenter extends BasePresenter<OrderView> {
         });
     }
 
+    public void UpdateOrder(OrderBean order,final int position){
+        commonModel.UpdateOrder(order, new HttpUtils.OnHttpResultListener() {
+            @Override
+            public void onResult(Object result) {
+                Result<OrderRespons> temp=(Result<OrderRespons>)result;
+                if(temp.status.equals("200")){
+                    getView().UpdateSussess(position);
+                }else{
+                    getView().showResultOnErr(temp.message);
+
+                }
+            }
+
+            @Override
+            public void onCompleted() {
+
+            }
+
+            @Override
+            public void onError(Throwable e) {
+
+            }
+        });
+    }
 
 
 }

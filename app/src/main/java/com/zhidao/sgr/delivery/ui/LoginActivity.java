@@ -75,6 +75,7 @@ public class LoginActivity extends AppCompatActivity {
                                editor.putString(AppCon.SCCESS_TOKEN_KEY,temp.content);
                                editor.commit();
                                StartActivityUtil.skipAnotherActivity(LoginActivity.this,OrderActivity.class);
+                               finish();
                            }else{
                                Toast.makeText(LoginActivity.this,temp.message,Toast.LENGTH_SHORT).show();
                            }
