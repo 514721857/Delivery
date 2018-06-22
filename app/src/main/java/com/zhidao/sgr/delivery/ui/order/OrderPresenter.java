@@ -12,6 +12,7 @@ import com.zhidao.sgr.delivery.model.CommonModel;
 import com.zhidao.sgr.delivery.model.OrderBean;
 import com.zhidao.sgr.delivery.model.OrderRespons;
 import com.zhidao.sgr.delivery.model.Result;
+import com.zhidao.sgr.delivery.model.oneArea;
 import com.zhidao.sgr.delivery.ui.LoginActivity;
 import com.zhidao.sgr.delivery.util.StartActivityUtil;
 
@@ -68,6 +69,32 @@ public class OrderPresenter extends BasePresenter<OrderView> {
                     getView().showResultOnErr(temp.message);
 
                 }
+            }
+
+            @Override
+            public void onCompleted() {
+
+            }
+
+            @Override
+            public void onError(Throwable e) {
+
+            }
+        });
+    }
+
+
+    public void getAddress1(){
+        commonModel.getAddress(new HttpUtils.OnHttpResultListener() {
+            @Override
+            public void onResult(Object result) {
+                Result<List<oneArea>> temp=(Result<List<oneArea>>)result;
+                if(temp.status.equals("200")){
+                    getView().ResultAddress1(temp.content);
+                }else{
+                    getView().showResultOnErr(temp.message);
+                }
+
             }
 
             @Override

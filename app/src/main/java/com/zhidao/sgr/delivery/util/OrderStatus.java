@@ -12,17 +12,17 @@ public class OrderStatus {
     public static String getStatusName(int status){
 
         if(status==0){
-            return "付款";
+            return "确认收款";
         }else if(status==1){
-            return "完成";
+            return "配送完成";
         }else if(status==2){
-            return "待配送";
+            return "";
         }else if(status==3){
             return "派送中";
         }else if(status==4){
-            return "完成";
+            return "订单完成";
         }else{
-            return "取消";
+            return "已取消";
             }
     }
 

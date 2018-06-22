@@ -130,7 +130,7 @@
 
                                 <Button
                                     android:id="@+id/order_btn_phone"
-                                    android:layout_width="60dp"
+                                    android:layout_width="wrap_content"
                                     android:layout_height="30dp"
                                     android:background="@drawable/touch_bg"
                                     android:text="打电话" />
@@ -139,7 +139,7 @@
                                 <Button
                                     android:layout_marginTop="20dp"
                                     android:id="@+id/order_list_zt"
-                                    android:layout_width="60dp"
+                                    android:layout_width="wrap_content"
                                     android:layout_height="30dp"
                                     android:background="@drawable/touch_bg"
                                     android:text="状态" />

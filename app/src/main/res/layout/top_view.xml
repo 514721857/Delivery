@@ -5,6 +5,7 @@
     android:layout_height="60dp">
 
         <TextView
+            android:visibility="gone"
             android:layout_gravity="center_vertical"
             android:layout_marginLeft="10dp"
             android:text="配送"
@@ -17,7 +18,7 @@
             android:textSize="20dp" />
 
         <TextView
-            android:text="地区"
+            android:text="配送系统"
             android:textColor="@android:color/white"
             android:id="@+id/top_view_title"
             android:layout_width="wrap_content"

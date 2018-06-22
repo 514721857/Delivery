@@ -7,6 +7,7 @@ package com.zhidao.sgr.delivery.model;
  */
 
 public class OrderBean {
+    String orderId;
     String username;
     String summary;
     String  address;
@@ -20,6 +21,14 @@ public class OrderBean {
     String phone;
     String gmtCreate;
     String sendTime;
+
+    public String getOrderId() {
+        return orderId;
+    }
+
+    public void setOrderId(String orderId) {
+        this.orderId = orderId;
+    }
 
     public String getSendTime() {
         return sendTime;

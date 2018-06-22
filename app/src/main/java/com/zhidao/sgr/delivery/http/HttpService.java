@@ -4,6 +4,7 @@ package com.zhidao.sgr.delivery.http;
 import com.zhidao.sgr.delivery.model.OrderBean;
 import com.zhidao.sgr.delivery.model.OrderRespons;
 import com.zhidao.sgr.delivery.model.Result;
+import com.zhidao.sgr.delivery.model.oneArea;
 
 import java.util.List;
 
@@ -74,4 +75,14 @@ public interface HttpService {
     @POST("seller/order/update")
     Observable<Result<OrderRespons>> UpdateOrder(@Header("token") String token, @Body RequestBody info);
 
+
+    /**
+     * 获取一级地址
+     *
+     *
+     * @return
+     */
+
+    @GET("address_one/list")
+    Observable<Result<List<oneArea>>> getAddress1();
 }

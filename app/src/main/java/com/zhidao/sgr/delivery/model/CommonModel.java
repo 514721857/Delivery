@@ -77,6 +77,7 @@ public class CommonModel extends BaseModel {
 //        order.setStatus(status);
         Gson gson=new Gson();
         String obj=gson.toJson(order);
+        System.out.println("请求参数"+obj);
         RequestBody body= RequestBody.create(okhttp3.MediaType.parse("application/json; charset=utf-8"),obj);
         HttpService essenceService= buildService(HttpService.class);
         buildObserve((Observable)essenceService.getOrderList(token,body),onLceHttpResultListener);
@@ -98,6 +99,18 @@ public class CommonModel extends BaseModel {
         RequestBody body= RequestBody.create(okhttp3.MediaType.parse("application/json; charset=utf-8"),obj);
         HttpService essenceService= buildService(HttpService.class);
         buildObserve((Observable)essenceService.UpdateOrder(token,body),onLceHttpResultListener);
+
+    }
+
+    /**
+     * 获取一级地址
+     *
+     * @param onLceHttpResultListener
+     */
+    public void getAddress( final HttpUtils.OnHttpResultListener onLceHttpResultListener) {
+
+        HttpService essenceService= buildService(HttpService.class);
+        buildObserve((Observable)essenceService.getAddress1(),onLceHttpResultListener);
 
     }
 
