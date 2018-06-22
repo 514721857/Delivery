@@ -1,5 +1,11 @@
 package com.zhidao.sgr.delivery.util;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.TimeZone;
+
 /**
  * Created by 沈国荣 on 2018/6/21.
  * QQ:514721857
@@ -43,5 +49,14 @@ public class OrderStatus {
             return "待付款";
         }
     }
+    public static String TimeFormat(String dateStr) throws ParseException {
 
+        DateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'hh:mm:ss.SSSZ");
+        Date result;
+        result = df.parse(dateStr);
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        sdf.setTimeZone(TimeZone.getTimeZone("GMT"));
+        return sdf.format(result);
+
+    }
 }

@@ -14,6 +14,7 @@ import com.zhidao.sgr.delivery.util.OrderStatus;
 import org.joda.time.DateTime;
 import org.joda.time.DateTimeZone;
 
+import java.text.ParseException;
 import java.util.Date;
 import java.util.List;
 
@@ -41,8 +42,12 @@ public class OrderListAdapter extends BaseQuickAdapter<OrderBean,BaseViewHolder>
         baseViewHolder.setText(R.id.order_list_can,"  餐费"+personItem.getAmount());
         baseViewHolder.setText(R.id.order_list_total,"  合计"+personItem.getTotal());
         baseViewHolder.setText(R.id.order_list_zt, OrderStatus.getStatusName(personItem.getStatus()));
-        baseViewHolder.setText(R.id.order_list_time,new DateTime(personItem.getGmtCreate()).toDateTimeISO().toString());
-        baseViewHolder.setText(R.id.order_send_time,new DateTime(personItem.getSendTime()).toDateTimeISO().toString());
+        try {
+            baseViewHolder.setText(R.id.order_list_time,"下单："+OrderStatus.TimeFormat(personItem.getGmtCreate()));
+            baseViewHolder.setText(R.id.order_send_time,"送达："+OrderStatus.TimeFormat(personItem.getSendTime()));
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
         baseViewHolder.addOnClickListener(R.id.order_btn_phone);
         baseViewHolder.addOnClickListener(R.id.order_list_zt);
        /* new DateTime(new Date()).toDateTime(DateTimeZone.UTC).toDateTimeString("yyyy年MM月dd日 hh时mm分ss秒");
