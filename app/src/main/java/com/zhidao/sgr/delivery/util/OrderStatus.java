@@ -20,9 +20,9 @@ public class OrderStatus {
         if(status==0){
             return "确认收款";
         }else if(status==1){
-            return "配送完成";
+            return "付款完成";
         }else if(status==2){
-            return "";
+            return "配送完成";
         }else if(status==3){
             return "派送中";
         }else if(status==4){
@@ -55,7 +55,7 @@ public class OrderStatus {
         Date result;
         result = df.parse(dateStr);
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        sdf.setTimeZone(TimeZone.getTimeZone("GMT"));
+        sdf.setTimeZone(TimeZone.getTimeZone("GMT+08:00"));
         return sdf.format(result);
 
     }

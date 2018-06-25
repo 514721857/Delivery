@@ -70,7 +70,7 @@ public class OrderActivity extends BaseMvpActivity<OrderView,OrderPresenter> imp
     SharedPreferences pref ;
     SharedPreferences.Editor editor;
     String address;
-    private int status=1;
+    private int status=2;
 
     @BindView(R.id.dropDownMenu)
     DropDownMenu mDropDownMenu;
@@ -361,8 +361,8 @@ public class OrderActivity extends BaseMvpActivity<OrderView,OrderPresenter> imp
 
                         OrderBean temp1=  (OrderBean) adapter.getData().get(position);
                         if(temp1.getStatus()==0){
-                            temp1.setStatus(1);
-                        }else if(temp1.getStatus()==1){
+                            temp1.setStatus(2);
+                        }else if(temp1.getStatus()==2){
                             temp1.setStatus(4);
                         }else{
                             Toast.makeText(OrderActivity.this,"不可修改",Toast.LENGTH_LONG).show();
