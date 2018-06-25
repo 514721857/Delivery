@@ -223,7 +223,7 @@ public class OrderActivity extends BaseMvpActivity<OrderView,OrderPresenter> imp
                 mDropDownMenu.setTabText( sexs[position]);
                 mDropDownMenu.closeMenu();
                 if(position==0){
-                    status=1;//待配送
+                    status=2;//待配送
                 }else if(position==1){
                     status=4;//完成配送
                 }else if(position==2){
