@@ -42,6 +42,14 @@ public class OrderListAdapter extends BaseQuickAdapter<OrderBean,BaseViewHolder>
         baseViewHolder.setText(R.id.order_list_can,"  餐费"+personItem.getAmount());
         baseViewHolder.setText(R.id.order_list_total,"  合计"+personItem.getTotal());
         baseViewHolder.setText(R.id.order_list_zt, OrderStatus.getStatusName(personItem.getStatus()));
+        if(personItem.getSummary()!=null&&!personItem.getSummary().equals("")){
+            baseViewHolder.getView(R.id.order_list_bz).setVisibility(View.VISIBLE);
+            baseViewHolder.setText(R.id.order_list_bz,"备注："+personItem.getSummary());
+        }else{
+            baseViewHolder.getView(R.id.order_list_bz).setVisibility(View.GONE);
+        }
+
+
         try {
             baseViewHolder.setText(R.id.order_list_time,"下单："+OrderStatus.TimeFormat(personItem.getGmtCreate()));
             baseViewHolder.setText(R.id.order_send_time,"送达："+OrderStatus.TimeFormat(personItem.getSendTime()));

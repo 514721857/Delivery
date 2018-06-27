@@ -51,7 +51,7 @@ public class OrderStatus {
     }
     public static String TimeFormat(String dateStr) throws ParseException {
 
-        DateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'hh:mm:ss.SSSZ");
+        DateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSZ");
         Date result;
         result = df.parse(dateStr);
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
