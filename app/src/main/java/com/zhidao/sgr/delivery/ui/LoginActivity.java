@@ -47,7 +47,8 @@ public class LoginActivity extends AppCompatActivity {
         editor = pref.edit();
         String temp= pref.getString(AppCon.SCCESS_TOKEN_KEY,"");
         if(temp==null||temp.equals("")){
-
+            login_ed_usename.setText(pref.getString(AppCon.USER_NAME,""));
+            login_ed_password.setText(pref.getString(AppCon.USER_PWD,""));
         }else{
             StartActivityUtil.skipAnotherActivity(LoginActivity.this,OrderActivity.class);
             finish();
@@ -73,6 +74,8 @@ public class LoginActivity extends AppCompatActivity {
                            Result<String> temp=(Result<String>)result;
                            if(temp.status.equals("200")){
                                editor.putString(AppCon.SCCESS_TOKEN_KEY,temp.content);
+                               editor.putString(AppCon.USER_NAME,login_ed_usename.getText().toString());
+                               editor.putString(AppCon.USER_PWD,login_ed_password.getText().toString());
                                editor.commit();
                                StartActivityUtil.skipAnotherActivity(LoginActivity.this,OrderActivity.class);
                                finish();
