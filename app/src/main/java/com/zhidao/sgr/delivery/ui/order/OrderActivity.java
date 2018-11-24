@@ -9,6 +9,7 @@ import android.content.Intent;
 import android.content.ServiceConnection;
 import android.content.SharedPreferences;
 import android.graphics.Color;
+import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.IBinder;
 import android.support.v4.content.ContextCompat;
@@ -47,6 +48,7 @@ import com.zhidao.sgr.delivery.model.OrderBean;
 import com.zhidao.sgr.delivery.ui.LoginActivity;
 import com.zhidao.sgr.delivery.ui.adapter.OrderListAdapter;
 import com.zhidao.sgr.delivery.util.OrderStatus;
+import com.zhidao.sgr.delivery.util.SoundPoolPlayer;
 import com.zhidao.sgr.delivery.util.StartActivityUtil;
 
 
@@ -103,12 +105,22 @@ public class OrderActivity extends MvpWebSocketActivity<OrderView,OrderPresenter
     TextView top_view_left;
 
     Badge wm_badeg_text;
+    SoundPoolPlayer mPlayer;
 
     //设置默认
     private void setMoren(){
 
         setWmChoice(0);
         wm_badeg_text=new QBadgeView(this).bindTarget(order_text_dzz).setBadgeText("").setBadgeGravity(Gravity.END | Gravity.TOP);
+        mPlayer = SoundPoolPlayer.create(this, R.raw.tip);
+        mPlayer.setOnCompletionListener(
+                new MediaPlayer.OnCompletionListener() {
+                    @Override
+                    public void onCompletion(MediaPlayer mp) { 	//mp will be null here
+                        Log.d("debug", "completed");
+                    }
+                }
+        );
 
     }
 
@@ -140,6 +152,10 @@ public class OrderActivity extends MvpWebSocketActivity<OrderView,OrderPresenter
                 setWmChoice(1);
                 break;
             case R.id.layout_dzz:// 待配送
+                if(!mPlayer.isPlaying()){
+                    mPlayer.play();
+                }
+
                 status=3;
                 refresh();
                 wm_badeg_text.hide(true);
