@@ -13,7 +13,7 @@ import java.util.List;
  */
 public interface OrderView extends MvpView {
     void UpdateSussess(int position);
-    void ResultAddress1(List<oneArea> reslt);
+
     void showResult(List<OrderBean> result);
     void showResultOnErr(String err);
 

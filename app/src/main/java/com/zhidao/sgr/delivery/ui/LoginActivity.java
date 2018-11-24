@@ -1,5 +1,6 @@
 package com.zhidao.sgr.delivery.ui;
 
+
 import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -7,6 +8,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
+
 
 import com.zhidao.sgr.delivery.R;
 import com.zhidao.sgr.delivery.config.AppCon;
@@ -16,6 +18,7 @@ import com.zhidao.sgr.delivery.model.Result;
 import com.zhidao.sgr.delivery.model.User;
 import com.zhidao.sgr.delivery.ui.order.OrderActivity;
 import com.zhidao.sgr.delivery.util.StartActivityUtil;
+import com.zhidao.sgr.delivery.util.ToastUtils;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -60,6 +63,9 @@ public class LoginActivity extends AppCompatActivity {
         switch (view.getId()) {
             case R.id.login_bt_commit://登录
 
+                StartActivityUtil.skipAnotherActivity(LoginActivity.this,OrderActivity.class);
+                finish();
+
                 if(login_ed_usename.getText().toString().equals("")){
                     Toast.makeText(LoginActivity.this,"请输入用户名",Toast.LENGTH_SHORT).show();
                 }else if(login_ed_password.getText().toString().equals("")){
@@ -71,17 +77,27 @@ public class LoginActivity extends AppCompatActivity {
                     commonModel.getLogin(user, new HttpUtils.OnHttpResultListener() {
                         @Override
                         public void onResult(Object result) {
-                           Result<String> temp=(Result<String>)result;
-                           if(temp.status.equals("200")){
-                               editor.putString(AppCon.SCCESS_TOKEN_KEY,temp.content);
-                               editor.putString(AppCon.USER_NAME,login_ed_usename.getText().toString());
-                               editor.putString(AppCon.USER_PWD,login_ed_password.getText().toString());
-                               editor.commit();
-                               StartActivityUtil.skipAnotherActivity(LoginActivity.this,OrderActivity.class);
-                               finish();
-                           }else{
-                               Toast.makeText(LoginActivity.this,temp.message,Toast.LENGTH_SHORT).show();
-                           }
+                            Result<User> temp=(Result<User>)result;
+                            if(temp.status.equals("200")){
+
+                                if(!temp.content.getEnabled().equals("1")){
+                                    ToastUtils.showLong("该账户已被停用");
+                                }else if(!temp.content.getRole().equals("2")){
+                                    ToastUtils.showLong("请用厨房账号登录");
+                                }else{
+                                    editor.putString(AppCon.SCCESS_TOKEN_KEY,temp.content.getToken());
+                                    editor.putString(AppCon.USER_NAME,login_ed_usename.getText().toString());
+                                    editor.putString(AppCon.USER_PWD,login_ed_password.getText().toString());
+                                    editor.putInt(AppCon.USER_SHOP_ID,Integer.parseInt(temp.content.getShopId()));
+                                    editor.commit();
+                                    StartActivityUtil.skipAnotherActivity(LoginActivity.this,OrderActivity.class);
+                                    finish();
+                                }
+
+
+                            }else{
+                                Toast.makeText(LoginActivity.this,temp.message,Toast.LENGTH_SHORT).show();
+                            }
                         }
 
                         @Override

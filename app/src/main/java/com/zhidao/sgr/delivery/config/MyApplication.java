@@ -6,6 +6,9 @@ import android.content.res.Configuration;
 import android.util.DisplayMetrics;
 import android.view.WindowManager;
 
+import com.zhangke.websocket.WebSocketSetting;
+import com.zhidao.sgr.delivery.http.webSocket.AppResponseDispatcher;
+
 
 /**
  * Created by toperc on 2018/5/20.
@@ -20,6 +23,11 @@ public class MyApplication extends Application {
         super.onCreate();
         resetDensity();
         getHeightAndWidth();
+        //配置 WebSocket，必须在 WebSocket 服务启动前设置
+        WebSocketSetting.setConnectUrl("ws://scauymt.com/sell/websocket/seller/new-order");//必选
+        WebSocketSetting.setResponseProcessDelivery(new AppResponseDispatcher());
+        WebSocketSetting.setReconnectWithNetworkChanged(true);
+
     }
 
     @Override

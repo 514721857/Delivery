@@ -39,10 +39,11 @@ dependencies {
     apt 'com.jakewharton:butterknife-compiler:8.6.0'
     compile 'com.github.CymChad:BaseRecyclerViewAdapterHelper:2.9.28'
     compile project(':MvpFramework')
-    compile project(':dropMenu')
+
     compile 'com.android.support:recyclerview-v7:26.+'
     compile 'com.android.support:cardview-v7:26.+'
     compile 'joda-time:joda-time:2.10'
-
+    compile project(':badgeviewlib')
+    compile project(':websocketlib')
 
 }
