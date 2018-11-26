@@ -63,9 +63,6 @@ public class LoginActivity extends AppCompatActivity {
         switch (view.getId()) {
             case R.id.login_bt_commit://登录
 
-                StartActivityUtil.skipAnotherActivity(LoginActivity.this,OrderActivity.class);
-                finish();
-
                 if(login_ed_usename.getText().toString().equals("")){
                     Toast.makeText(LoginActivity.this,"请输入用户名",Toast.LENGTH_SHORT).show();
                 }else if(login_ed_password.getText().toString().equals("")){

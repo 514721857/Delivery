@@ -4,6 +4,7 @@ package com.zhidao.sgr.delivery.http;
 import com.zhidao.sgr.delivery.model.OrderBean;
 import com.zhidao.sgr.delivery.model.OrderRespons;
 import com.zhidao.sgr.delivery.model.Result;
+import com.zhidao.sgr.delivery.model.User;
 import com.zhidao.sgr.delivery.model.oneArea;
 
 import java.util.List;
@@ -40,7 +41,7 @@ public interface HttpService {
      */
     @Headers({"Content-type:application/json;charset=UTF-8"})
     @POST("seller/login")
-    Observable<Result<String>> getLogin(@Body RequestBody info);
+    Observable<Result<User>> getLogin(@Body RequestBody info);
 
 
     /**
