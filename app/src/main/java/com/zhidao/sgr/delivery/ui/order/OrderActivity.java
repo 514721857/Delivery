@@ -106,6 +106,7 @@ public class OrderActivity extends MvpWebSocketActivity<OrderView,OrderPresenter
 
     Badge wm_badeg_text;
     SoundPoolPlayer mPlayer;
+    String userID;
 
     //设置默认
     private void setMoren(){
@@ -152,9 +153,9 @@ public class OrderActivity extends MvpWebSocketActivity<OrderView,OrderPresenter
                 setWmChoice(1);
                 break;
             case R.id.layout_dzz:// 待配送
-                if(!mPlayer.isPlaying()){
+           /*     if(!mPlayer.isPlaying()){
                     mPlayer.play();
-                }
+                }*/
 
                 status=3;
                 refresh();
@@ -162,7 +163,7 @@ public class OrderActivity extends MvpWebSocketActivity<OrderView,OrderPresenter
                 setWmChoice(0);
                 break;
             case R.id.top_view_right_text:
-                pref = this.getSharedPreferences(AppCon.USER_KEY,MODE_PRIVATE);
+
                 editor = pref.edit();
                 editor.putString(AppCon.SCCESS_TOKEN_KEY,"");
                 editor.commit();
@@ -196,7 +197,8 @@ public class OrderActivity extends MvpWebSocketActivity<OrderView,OrderPresenter
     @Override
     protected void initView() {
         super.initView();
-
+        pref = this.getSharedPreferences(AppCon.USER_KEY,MODE_PRIVATE);
+        userID= pref.getString(AppCon.USER_USER_ID,"");
         setMoren();
         initMenu();
 //        getPresenter().getAddress1();
@@ -306,7 +308,7 @@ public class OrderActivity extends MvpWebSocketActivity<OrderView,OrderPresenter
             case R.id.order_list_zt://修改订单状态
                 OrderBean updateOrder=  (OrderBean) adapter.getData().get(position);
                 if(updateOrder.getStatus()==3){//需要设置时间//按下开始制作
-
+                    updateOrder.setPsId(userID);
                     updateOrder.setStatus(4);
                 }else if(updateOrder.getStatus()==4){//按下完成制作
 

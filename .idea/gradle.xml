@@ -10,7 +10,8 @@
             <option value="$PROJECT_DIR$" />
             <option value="$PROJECT_DIR$/MvpFramework" />
             <option value="$PROJECT_DIR$/app" />
-            <option value="$PROJECT_DIR$/dropMenu" />
+            <option value="$PROJECT_DIR$/badgeviewlib" />
+            <option value="$PROJECT_DIR$/websocketlib" />
           </set>
         </option>
         <option name="resolveModulePerSourceSet" value="false" />

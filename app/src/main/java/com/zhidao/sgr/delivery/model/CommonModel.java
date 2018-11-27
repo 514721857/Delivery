@@ -75,6 +75,7 @@ public class CommonModel extends BaseModel {
         order.setCurrPage(page);
         order.setStatus(status);
         order.setShopId(shopId);
+        order.setType(1);
         Gson gson=new Gson();
         String obj=gson.toJson(order);
         System.out.println("请求参数"+obj);

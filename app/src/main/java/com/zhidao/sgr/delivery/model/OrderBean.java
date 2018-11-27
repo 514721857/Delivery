@@ -7,15 +7,14 @@ package com.zhidao.sgr.delivery.model;
  */
 
 public class OrderBean {
-
     String buyerId;//买家主键，作关联
     String buyerOpenid;//来自微信
-    int kfId;//客服id
-    int shopId;//店铺id
+    String kfId;//客服id
+    String shopId;//店铺id
     int type;//0到店自取，1表示外卖送
-    int cfId;//厨房id
+    String cfId;//厨房id
     int todaySeq;//当天序号，表示今天的第几单
-    int psId;//配送员id
+    String psId;//配送员id
     String psStartTime;//配送开始时间
     String psEndTime;//：配送结束时间
     String psTimeLen;//配送=结束时间-开始时间，分钟
@@ -45,37 +44,23 @@ public class OrderBean {
     String gmtCreate;//下单时间
     String sendTime;//配送时间，默认为当前立即配送
 
-    public int getKfId() {
-        return kfId;
+    public String getBuyerId() {
+        return buyerId;
     }
 
-    public void setKfId(int kfId) {
-        this.kfId = kfId;
+    public void setBuyerId(String buyerId) {
+        this.buyerId = buyerId;
     }
 
-    public int getShopId() {
-        return shopId;
+    public String getBuyerOpenid() {
+        return buyerOpenid;
     }
 
-    public void setShopId(int shopId) {
-        this.shopId = shopId;
+    public void setBuyerOpenid(String buyerOpenid) {
+        this.buyerOpenid = buyerOpenid;
     }
 
-    public int getType() {
-        return type;
-    }
 
-    public void setType(int type) {
-        this.type = type;
-    }
-
-    public int getCfId() {
-        return cfId;
-    }
-
-    public void setCfId(int cfId) {
-        this.cfId = cfId;
-    }
 
     public int getTodaySeq() {
         return todaySeq;
@@ -85,13 +70,6 @@ public class OrderBean {
         this.todaySeq = todaySeq;
     }
 
-    public int getPsId() {
-        return psId;
-    }
-
-    public void setPsId(int psId) {
-        this.psId = psId;
-    }
 
     public String getPsStartTime() {
         return psStartTime;
@@ -251,5 +229,45 @@ public class OrderBean {
 
     public void setSn(String sn) {
         this.sn = sn;
+    }
+
+    public String getKfId() {
+        return kfId;
+    }
+
+    public void setKfId(String kfId) {
+        this.kfId = kfId;
+    }
+
+    public String getShopId() {
+        return shopId;
+    }
+
+    public void setShopId(String shopId) {
+        this.shopId = shopId;
+    }
+
+    public int getType() {
+        return type;
+    }
+
+    public void setType(int type) {
+        this.type = type;
+    }
+
+    public String getCfId() {
+        return cfId;
+    }
+
+    public void setCfId(String cfId) {
+        this.cfId = cfId;
+    }
+
+    public String getPsId() {
+        return psId;
+    }
+
+    public void setPsId(String psId) {
+        this.psId = psId;
     }
 }

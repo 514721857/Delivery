@@ -80,12 +80,13 @@ public class LoginActivity extends AppCompatActivity {
                                 if(!temp.content.getEnabled().equals("1")){
                                     ToastUtils.showLong("该账户已被停用");
                                 }else if(!temp.content.getRole().equals("2")){
-                                    ToastUtils.showLong("请用厨房账号登录");
+                                    ToastUtils.showLong("请用配送账号登录");
                                 }else{
                                     editor.putString(AppCon.SCCESS_TOKEN_KEY,temp.content.getToken());
                                     editor.putString(AppCon.USER_NAME,login_ed_usename.getText().toString());
                                     editor.putString(AppCon.USER_PWD,login_ed_password.getText().toString());
                                     editor.putInt(AppCon.USER_SHOP_ID,Integer.parseInt(temp.content.getShopId()));
+                                    editor.putString(AppCon.USER_USER_ID,temp.content.getSellerId());
                                     editor.commit();
                                     StartActivityUtil.skipAnotherActivity(LoginActivity.this,OrderActivity.class);
                                     finish();

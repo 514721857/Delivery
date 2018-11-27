@@ -31,9 +31,9 @@ public class OrderStatus {
             }else if(status==2){//制作中
                 return "完成制作";
             }else if(status==3){//待配送
-                return "待配送";
+                return "开始配送";
             }else if(status==4){//派送中
-                return "派送中";
+                return "完成配送";
             }else if(status==5){//订单完成
                 return "已完成";
             }else if(status==-1){//
