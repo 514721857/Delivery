@@ -44,12 +44,15 @@ import com.zhangke.websocket.Response;
 import com.zhidao.sgr.delivery.R;
 import com.zhidao.sgr.delivery.config.AppCon;
 import com.zhidao.sgr.delivery.config.MvpWebSocketActivity;
+import com.zhidao.sgr.delivery.model.GsonTip;
 import com.zhidao.sgr.delivery.model.OrderBean;
+import com.zhidao.sgr.delivery.model.clientMsg;
 import com.zhidao.sgr.delivery.ui.LoginActivity;
 import com.zhidao.sgr.delivery.ui.adapter.OrderListAdapter;
 import com.zhidao.sgr.delivery.util.OrderStatus;
 import com.zhidao.sgr.delivery.util.SoundPoolPlayer;
 import com.zhidao.sgr.delivery.util.StartActivityUtil;
+import com.zhidao.sgr.delivery.util.ToastUtils;
 
 
 import java.io.IOException;
@@ -89,7 +92,8 @@ public class OrderActivity extends MvpWebSocketActivity<OrderView,OrderPresenter
     SharedPreferences.Editor editor;
     String address;
     private int status=3;//默认是待配送
-
+    private Gson gson;
+    int shopId;
 
 
     @BindView(R.id.order_text_dzz)
@@ -112,8 +116,8 @@ public class OrderActivity extends MvpWebSocketActivity<OrderView,OrderPresenter
     private void setMoren(){
 
         setWmChoice(0);
-        wm_badeg_text=new QBadgeView(this).bindTarget(order_text_dzz).setBadgeText("").setBadgeGravity(Gravity.END | Gravity.TOP);
-        mPlayer = SoundPoolPlayer.create(this, R.raw.tip);
+        wm_badeg_text=new QBadgeView(this).bindTarget(order_text_dzz).setBadgeGravity(Gravity.END | Gravity.TOP);
+        mPlayer = SoundPoolPlayer.create(this, R.raw.newtip);
         mPlayer.setOnCompletionListener(
                 new MediaPlayer.OnCompletionListener() {
                     @Override
@@ -199,6 +203,7 @@ public class OrderActivity extends MvpWebSocketActivity<OrderView,OrderPresenter
         super.initView();
         pref = this.getSharedPreferences(AppCon.USER_KEY,MODE_PRIVATE);
         userID= pref.getString(AppCon.USER_USER_ID,"");
+        shopId=pref.getInt(AppCon.USER_SHOP_ID,0);
         setMoren();
         initMenu();
 //        getPresenter().getAddress1();
@@ -236,6 +241,9 @@ public class OrderActivity extends MvpWebSocketActivity<OrderView,OrderPresenter
     }
 
     private void refresh() {
+        if(status==3){
+            wm_badeg_text.hide(true);
+        }
         mNextRequestPage = 0;
         mAdapter.setEnableLoadMore(false);//这里的作用是防止下拉刷新的时候还可以上拉加载
         getPresenter().getOrderList(status,mNextRequestPage);
@@ -346,9 +354,41 @@ public class OrderActivity extends MvpWebSocketActivity<OrderView,OrderPresenter
     @Override
     public void onMessageResponse(Response message) {
         System.out.println("新消息提示"+message.getResponseText());
+        if(gson==null){
+            gson=new Gson();
+        }
+        if(message.getResponseText().contains("clientMsg")){//app端推送的东西
+            clientMsg clientMsg= gson.fromJson( message.getResponseText() , clientMsg.class ) ;
+            showTip(clientMsg.getClientMsg());
+        }else{ //服务器推送的东西
+            showTip(message.getResponseText());
+
+        }
+
+    }
+    private void showTip(String message) {
+        GsonTip newTip= gson.fromJson(message , GsonTip.class ) ;
+        if(newTip.getShopId().equals(String.valueOf(shopId))){
+            if(newTip.getStatus()==3) { //新订单提醒
+
+                if(newTip.getType()==1){//外卖提醒
+                    wm_badeg_text.setBadgeText("");
+                    showMusicTip();
+                    ToastUtils.showLong("新订单");
+                }else{//自取提醒
+
+                }
+
+            }
+        }
 
     }
 
+    private void showMusicTip() {
+        if(!mPlayer.isPlaying()){
+            mPlayer.play();
+        }
+    }
     @Override
     public void onSendMessageError(ErrorResponse error) {
         System.out.println("新消息错误"+error.getResponseText());
