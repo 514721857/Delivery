@@ -117,7 +117,7 @@ public class OrderActivity extends MvpWebSocketActivity<OrderView,OrderPresenter
 
         setWmChoice(0);
         wm_badeg_text=new QBadgeView(this).bindTarget(order_text_dzz).setBadgeGravity(Gravity.END | Gravity.TOP);
-        mPlayer = SoundPoolPlayer.create(this, R.raw.newtip);
+        mPlayer = SoundPoolPlayer.create(this, R.raw.threeo);
         mPlayer.setOnCompletionListener(
                 new MediaPlayer.OnCompletionListener() {
                     @Override
