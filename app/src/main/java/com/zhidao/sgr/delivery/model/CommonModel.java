@@ -24,6 +24,7 @@ import static android.content.Context.MODE_PRIVATE;
 public class CommonModel extends BaseModel {
 
     String token;
+    String userID;
     SharedPreferences pref ;
     int shopId;;
     public CommonModel(Context context) {
@@ -31,6 +32,7 @@ public class CommonModel extends BaseModel {
         pref = context.getSharedPreferences(AppCon.USER_KEY,MODE_PRIVATE);
         token= pref.getString(AppCon.SCCESS_TOKEN_KEY,"");
         shopId=pref.getInt(AppCon.USER_SHOP_ID,0);
+        userID= pref.getString(AppCon.USER_USER_ID,"");
     }
 
     /**
@@ -74,6 +76,9 @@ public class CommonModel extends BaseModel {
         order.setPageSize(10);
         order.setCurrPage(page);
         order.setStatus(status);
+        if(status>3){
+            order.setPsId(userID);
+        }
         order.setShopId(shopId);
         order.setType(1);
         Gson gson=new Gson();

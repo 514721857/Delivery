@@ -318,13 +318,15 @@ public class OrderActivity extends MvpWebSocketActivity<OrderView,OrderPresenter
                 if(updateOrder.getStatus()==3){//需要设置时间//按下开始制作
                     updateOrder.setPsId(userID);
                     updateOrder.setStatus(4);
+                    getPresenter().UpdateOrder(updateOrder,position);
                 }else if(updateOrder.getStatus()==4){//按下完成制作
 
                     updateOrder.setStatus(5);
+                    getPresenter().UpdateOrder(updateOrder,position);
                 }else {
                     return;
                 }
-                getPresenter().UpdateOrder(updateOrder,position);
+
 
                 break;
 
